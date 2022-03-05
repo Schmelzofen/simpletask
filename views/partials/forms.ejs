@@ -1,0 +1,72 @@
+<section class="formContainer">
+    <section class="form">
+        <form action="/addtask" method="post">
+            <div class="datum">
+                <label for="date">Datum (TT/MM)</label>
+                <div class="datumInput">
+                    <input type="text" name="day" required>
+                    <input type="text" name="month" required>
+                </div>
+            </div>
+            <div class="description">
+                <label for="description">Bezeichnung</label>
+                <div class="descriptionInput">
+                    <input type="text" name="description" required>
+                </div>
+            </div>
+            <div class="notify">
+                <label for="notification">Erinnerung</label>
+                <div class="notifyInput">
+                    <select name="notification" required>
+                        <option value="">--bitte auswählen--</option>
+                        <option value="1 Tag">1 Tag</option>
+                        <option value="2 Tage">2 Tage</option>
+                        <option value="4 Tage">4 Tage</option>
+                        <option value="1 Woche">1 Woche</option>
+                        <option value="2 Wochen">2 Wochen</option>
+                    </select>
+                </div>
+
+            </div>
+            <div class="button">
+                <input type="submit" value="SPEICHERN">    
+            </div>
+
+        </form>
+    </section>
+    <article class="tasksContainer">
+        <section class="tasks">
+            <ul>
+                <li>Datum</li>
+                <% tasks.forEach((elt) => {%>
+                    <li><%- elt.day %>.<%- elt.month %>.</li>
+                <% }) %> 
+            </ul>
+            <ul>
+                <li>Bezeichnung</li>
+                <% tasks.forEach((elt) => {%>
+                    <li><%- elt.description %></li>
+                <% }) %> 
+            </ul>
+            <ul>
+                <li>Erinnerung</li>
+                <% tasks.forEach((elt) => {%>
+                    <li><%- elt.notification %></li>
+                <% }) %> 
+            </ul>
+            <ul class="editDelete">
+                <li>Aktion</li>
+                <% tasks.forEach((elt) => {%>
+                    <li>
+                        <button>bearbeiten</button><span class="divider">|</span>
+                        <form action="/deletetask" method="post">
+                            <input type="hidden" name="_id" value="<%- elt._id %>">
+                            <input type="submit" value="löschen">
+                        </form>
+                    </li>
+                <% }) %> 
+            </ul>
+        </section>
+    </article>
+</section>
+

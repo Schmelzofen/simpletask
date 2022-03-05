@@ -1,0 +1,36 @@
+<section class="authContainer">
+    <section class="login">
+        <form action="/login" method="post">
+            <div class="username">
+                <label for="username">Benutzername</label>
+                <input type="text" name="username" required>
+            </div>
+            <div class="password">
+                <label for="password">Passwort</label>
+                <input type="password" name="password" required>
+            </div>
+            <input type="submit" value="Anmelden">
+        </form>
+    </section>
+    <section class="register">
+        <form action="/register" method="post">
+            <div class="username">
+                <label for="username">Benutzername</label>
+                <input type="text" name="username" required>
+            </div>
+            <div class="email">
+                <label for="email">Email</label>
+                <input type="text" name="email" required>
+            </div>
+            <div class="password">
+                <label for="password">Passwort</label>
+                <input type="password" name="password" required>
+                <div class="passwordRepeat">
+                    <label for="password">Passwort wiederholen</label>
+                    <input type="password" name="password" required>
+                </div>
+            </div>
+            <input type="submit" value="Registrieren">
+        </form>
+    </section>
+</section>
