@@ -46,17 +46,8 @@ main {
     padding: 1%;
 }
 
-.navigation ul li:nth-of-type(1) {
-    background: white;
-}
-
 .navigation ul li > a {
     text-decoration: none;
-    color: white;
-}
-
-.navigation ul li:nth-of-type(1) a {
-    color: gray;
 }
 
 .formContainer {
@@ -143,7 +134,8 @@ main {
 
 .authContainer,
 .loremContainer,
-.formContainer {
+.formContainer,
+.welcome {
     background: linear-gradient(to right, gray 4px, transparent 4px) 0 100%,
         linear-gradient(to left, gray 4px, transparent 4px) 100% 100%,
         linear-gradient(to top, gray 4px, transparent 4px) 0 100%,
@@ -175,7 +167,7 @@ main {
     border: 1px solid gray;
 }
 
-.editDelete li:nth-of-type(2) {
+.flexButton {
     display: flex;
 }
 
@@ -192,9 +184,17 @@ main {
 }
 
 .welcome {
-    margin: 6% 10% 0;
+    margin: 6% 3% 0;
 }
 
 .welcome h1 {
     margin: 0 0 3% 0;
+}
+
+.active {
+    background: white;
+}
+
+.inactive a {
+    color: white;
 }

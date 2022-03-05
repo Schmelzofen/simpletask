@@ -3,8 +3,10 @@ const { connect } = require('../db/connection')
 const { getTask, addTask, editTask, deleteTask } = require('../db/DAO')
 const { findUser, findUserById } = require("../db/DAO")
 const jwt = require("jsonwebtoken")
+const { userToken } = require("./tokenController")
 
 async function getTaskContr(req, res) {
+    let token = userToken(req, res)
     const decodedToken = jwt.verify(req.cookies.authcookie, process.env.SALT)
     const user = decodedToken.user
     let tasks
@@ -13,7 +15,8 @@ async function getTaskContr(req, res) {
             tasks = result.tasks
         })
     return res.render("pages/menuzwei", {
-        tasks
+        tasks,
+        token
     })
 }
 

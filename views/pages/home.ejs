@@ -10,7 +10,7 @@
 <body>
     <%- include("../partials/header.ejs")  %> 
     <main>
-        <%- include("../partials/navigation.ejs") %> 
+        <%- include("../partials/navigation.ejs", {token}) %> 
         <% if(!token["authcookie"]){ %>
             <%- include("../partials/auth.ejs") %> 
         <% } else { %>

@@ -7,11 +7,11 @@ const SALT = process.env.SALT
 
 async function loginController(req, res) {
     const user = {
-        username: req.body.username,
+        email: req.body.email,
         password: req.body.password
     }
     let doesUserExist
-    const getUser = await findUser({ username: user.username })
+    const getUser = await findUser({ email: user.email })
         .then((result) => {
             doesUserExist = result
         })
@@ -41,19 +41,31 @@ async function registrationController(req, res) {
     if (!req.body.email.includes("@")) {
         alert("Email ist nicht valide!")
     }
-    if (req.body.password[0] == req.body.password[1] && req.body.email.includes("@")) {
-        const hash = crypto.pbkdf2Sync(req.body.password[0], SALT, 1932, 64, "sha512").toString("hex")
-        const newUser = {
-            username: req.body.username,
-            email: req.body.email,
-            password: hash,
-            tasks: []
+    let doesUserExist
+    const getUser = await findUser({ email: req.body.email })
+        .then((result) => {
+            doesUserExist = result
+        })
+        .catch((error) => {
+            console.log(error)
+        })
+    if (doesUserExist.length == 0) {
+        if (req.body.password[0] == req.body.password[1] && req.body.email.includes("@")) {
+            const hash = crypto.pbkdf2Sync(req.body.password[0], SALT, 1932, 64, "sha512").toString("hex")
+            const newUser = {
+                name: req.body.name,
+                email: req.body.email,
+                password: hash,
+                tasks: []
+            }
+            const registerUser = await addUser(newUser)
+                .then(() => {
+                    alert("Benutzer angelegt")
+                    res.redirect("/")
+                })
         }
-        const registerUser = await addUser(newUser)
-            .then(() => {
-                alert("Benutzer angelegt")
-                res.redirect("/")
-            })
+    } else {
+        alert("Benutzer schon vorhanden")
     }
 }
 

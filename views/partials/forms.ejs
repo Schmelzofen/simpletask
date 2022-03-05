@@ -57,7 +57,7 @@
             <ul class="editDelete">
                 <li>Aktion</li>
                 <% tasks.forEach((elt) => {%>
-                    <li>
+                    <li class="flexButton">
                         <button>bearbeiten</button><span class="divider">|</span>
                         <form action="/deletetask" method="post">
                             <input type="hidden" name="_id" value="<%- elt._id %>">

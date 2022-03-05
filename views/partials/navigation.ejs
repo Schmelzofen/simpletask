@@ -1,7 +1,31 @@
 <section class="navigation">
     <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/menueins">Menüpunkt 1</a></li>
-        <li><a href="/menuzwei">Menüpunkt 2</a></li>
+        <% if(!token["authcookie"]){ %>
+            <li id="first"><a href="/">Home</a></li>
+        <% } else{ %> 
+            <li id="first"><a href="/">Home</a></li>
+            <li id="second"><a href="/menueins">Menüpunkt 1</a></li>
+            <li id="third"><a href="/menuzwei">Menüpunkt 2</a></li>
+        <% } %> 
     </ul>
 </section>
+<script>
+    let first = document.getElementById('first')
+    let second = document.getElementById('second')
+    let third = document.getElementById('third')
+    if(window.location.href == "http://localhost:3000/"){
+        first.classList.add("active")
+        second.classList.add("inactive")
+        third.classList.add("inactive")
+    } 
+    if (window.location.href == "http://localhost:3000/menueins"){
+        first.classList.add("inactive")
+        second.classList.add("active")
+        third.classList.add("inactive")
+    }
+    if (window.location.href == "http://localhost:3000/menuzwei"){
+        first.classList.add("inactive")
+        second.classList.add("inactive")
+        third.classList.add("active")
+    }
+</script>

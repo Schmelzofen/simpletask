@@ -13,7 +13,10 @@ const routes = (app) => {
         })
     app.route("/menueins")
         .get(checkTokenController, (req, res) => {
-            res.render("pages/menueins")
+            let token = userToken(req, res)
+            res.render("pages/menueins", {
+                token
+            })
         })
     app.route('/menuzwei')
         .get(checkTokenController, (req, res) => {
