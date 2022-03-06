@@ -19,11 +19,11 @@
                 <div class="notifyInput">
                     <select name="notification" required>
                         <option value="">--bitte auswählen--</option>
-                        <option value="1 Tag">1 Tag</option>
-                        <option value="2 Tage">2 Tage</option>
-                        <option value="4 Tage">4 Tage</option>
-                        <option value="1 Woche">1 Woche</option>
-                        <option value="2 Wochen">2 Wochen</option>
+                        <option value="1">1 Tag</option>
+                        <option value="2">2 Tage</option>
+                        <option value="4">4 Tage</option>
+                        <option value="7">1 Woche</option>
+                        <option value="14">2 Wochen</option>
                     </select>
                 </div>
 
@@ -63,16 +63,16 @@
             <ul>
                 <li>Erinnerung</li>
                 <% tasks.forEach((elt) => {%>
-                    <li><%- elt.notification %></li>
+                    <li><%- elt.notification %> Tag(e)</li>
                     <div class="<%- elt._id %>">
                         <form id="editedTask" required>
                             <select name="notification" required>
                                 <option value="">--bitte auswählen--</option>
-                                <option value="1 Tag">1 Tag</option>
-                                <option value="2 Tage">2 Tage</option>
-                                <option value="4 Tage">4 Tage</option>
-                                <option value="1 Woche">1 Woche</option>
-                                <option value="2 Wochen">2 Wochen</option>
+                                <option value="1">1 Tag</option>
+                                <option value="2">2 Tage</option>
+                                <option value="4">4 Tage</option>
+                                <option value="7">1 Woche</option>
+                                <option value="14">2 Wochen</option>
                             </select>
                         </form>
                     </div>

@@ -1,7 +1,6 @@
 const { getTaskContr, addTaskContr, deleteTaskContr, editTaskContr } = require("../controller/taskcontroller")
 const { loginController, registrationController } = require("../controller/usercontroller")
 const { checkTokenController, userToken } = require("../controller/tokenController")
-const jwt = require("jsonwebtoken")
 
 const routes = (app) => {
     app.route("/")

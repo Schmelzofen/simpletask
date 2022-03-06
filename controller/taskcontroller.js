@@ -1,9 +1,9 @@
 const { ObjectId } = require('mongodb')
 const { connect } = require('../db/connection')
-const { getTask, addTask, editTask, deleteTask } = require('../db/DAO')
-const { findUser, findUserById } = require("../db/DAO")
-const jwt = require("jsonwebtoken")
+const { findUserById } = require("../db/DAO")
 const { userToken } = require("./tokenController")
+const { mailController } = require("./mailController")
+const jwt = require("jsonwebtoken")
 
 async function getTaskContr(req, res) {
     let token = userToken(req, res)
@@ -31,6 +31,16 @@ async function addTaskContr(req, res) {
         description: req.body.description,
         notification: req.body.notification,
     }
+    let reminderDays = tasks.day - tasks.notification
+    let reminderMonths = tasks.month
+    if (reminderDays < 0) {
+        daysLeft = reminderDays + 31
+        monthsLeft = reminderMonths - 1
+        mailController(`55 18 ${daysLeft} ${monthsLeft} *`, user[0].email, tasks.description, tasks.day, tasks.month)
+    } else {
+        mailController(`55 18 ${reminderDays} ${reminderMonths} *`, user[0].email, tasks.description, tasks.day, tasks.month)
+    }
+    console.log(reminderDays, reminderMonths)
     const findUser = await db.collection("microlab").updateOne({ _id: ObjectId(user[0]._id) }, { $addToSet: { tasks } }, { upsert: true })
     res.redirect("/menuzwei")
 }
