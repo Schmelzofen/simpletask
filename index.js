@@ -5,6 +5,7 @@ const { routes } = require('./routes/crmRoutes')
 const bodyparser = require('body-parser')
 var cookieParser = require('cookie-parser')
 const jwt = require("jsonwebtoken")
+var cors = require('cors')
 
 app.set('view engine', 'ejs')
 app.use(express.static(__dirname + '/public'))
