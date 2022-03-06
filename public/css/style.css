@@ -96,13 +96,9 @@ main {
     font-weight: 600;
 }
 
-.tasks input[type="text"] {
-    border: none;
-}
-
 .inputWidth input {
     display: inline;
-    width: 15px;
+    width: 18px;
 }
 
 .greyBlock {
