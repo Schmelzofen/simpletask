@@ -11,6 +11,7 @@ app.use(express.static(__dirname + '/public'))
 app.use(bodyparser.urlencoded({ extended: false }))
 app.use(bodyparser.json())
 app.use(cookieParser())
+app.use(cors())
 
 routes(app)
 
