@@ -1,5 +1,7 @@
 const nodemailer = require("nodemailer")
-var CronJob = require("cron").CronJob
+const cron = require("node-cron")
+
+
 
 async function mailController(whenToRemind, email, description, day, month) {
     console.log(whenToRemind, email, description, day, month)
@@ -12,18 +14,23 @@ async function mailController(whenToRemind, email, description, day, month) {
             pass: process.env.PASSWD
         }
     })
-    const job = new CronJob(`${whenToRemind}`, () => {
+    let mailHasBeenSent = false
+    let job = cron.schedule(`${whenToRemind}`, () => {
         let reminder = transporter.sendMail({
             from: '"TaskReminder" <taskreminderml@gmail.com',
             to: email,
             subject: "Benachrichtigung",
             text: `Folgendes steht demnächst an: ${description}\nWann: ${day}.${month}.`,
             html: `<h1>Folgendes steht demnächst an: ${description}</h1><br><p>Wann: ${day}.${month}.</p>`
-        }, null, true, 'America/Los_Angeles')
-
-        console.log("Message has been sent: %s", reminder.messageId)
+        })
+        console.log(mailHasBeenSent)
+        mailHasBeenSent = true
+        console.log("Message has been sent.", mailHasBeenSent)
     })
-    job.start()
+    if (mailHasBeenSent === true) {
+        job.stop()
+        mailHasBeenSent === false
+    }
 }
 
 module.exports = {
