@@ -45,8 +45,26 @@ async function deleteTaskContr(req, res) {
     if (doesItExist.length == 1) {
         const removedElement = await db.collection("microlab").updateOne({ _id: ObjectId(user[0]._id) }, { $pull: { tasks: doesItExist[0] } })
         res.redirect("/menuzwei")
-    } else {
-        console.log("Ehm")
+    }
+}
+
+async function editTaskContr(req, res) {
+    const db = await connect()
+    const decodedToken = jwt.verify(req.cookies.authcookie, process.env.SALT)
+    const user = decodedToken.user
+    const task = {
+        _id: ObjectId(),
+        day: req.body.day,
+        month: req.body.month,
+        description: req.body.description,
+        notification: req.body.notification,
+    }
+    const getUser = await db.collection("microlab").findOne({ _id: ObjectId(user[0]._id) })
+    const doesItExist = getUser.tasks.filter((item) => item._id == req.body._id)
+    if (doesItExist.length == 1) {
+        const removedElement = await db.collection("microlab").updateOne({ _id: ObjectId(user[0]._id) }, { $pull: { tasks: doesItExist[0] } })
+        const addedElement = await db.collection("microlab").updateOne({ _id: ObjectId(user[0]._id) }, { $addToSet: { tasks: task } })
+        res.redirect("/menuzwei")
     }
 }
 
@@ -54,4 +72,5 @@ module.exports = {
     getTaskContr,
     addTaskContr,
     deleteTaskContr,
+    editTaskContr,
 }

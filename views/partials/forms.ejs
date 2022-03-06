@@ -40,30 +40,61 @@
                 <li>Datum</li>
                 <% tasks.forEach((elt) => {%>
                     <li><%- elt.day %>.<%- elt.month %>.</li>
+                    <div class="<%- elt._id %> inputWidth">
+                        <form action="/edittask" id="editedTask" method="post">
+                            <input type="text" name="day" value="<%- elt.day %>">
+                            .
+                            <input type="text" name="month" value="<%- elt.month %>">
+                        </form>
+                    </div>
                 <% }) %> 
             </ul>
             <ul>
                 <li>Bezeichnung</li>
                 <% tasks.forEach((elt) => {%>
                     <li><%- elt.description %></li>
+                    <div class="<%- elt._id %>">
+                        <form id="editedTask">
+                            <input type="text" name="description" value="<%- elt.description %>">
+                        </form>
+                    </div>
                 <% }) %> 
             </ul>
             <ul>
                 <li>Erinnerung</li>
                 <% tasks.forEach((elt) => {%>
                     <li><%- elt.notification %></li>
+                    <div class="<%- elt._id %>">
+                        <form id="editedTask" required>
+                            <select name="notification" required>
+                                <option value="">--bitte auswählen--</option>
+                                <option value="1 Tag">1 Tag</option>
+                                <option value="2 Tage">2 Tage</option>
+                                <option value="4 Tage">4 Tage</option>
+                                <option value="1 Woche">1 Woche</option>
+                                <option value="2 Wochen">2 Wochen</option>
+                            </select>
+                        </form>
+                    </div>
                 <% }) %> 
             </ul>
             <ul class="editDelete">
                 <li>Aktion</li>
                 <% tasks.forEach((elt) => {%>
                     <li class="flexButton">
-                        <button>bearbeiten</button><span class="divider">|</span>
+                        <button onClick="editForm('<%- elt._id %>')">bearbeiten</button><span class="divider">|</span>
                         <form action="/deletetask" method="post">
-                            <input type="hidden" name="_id" value="<%- elt._id %>">
+                            <input type="hidden" id="editedTask" name="_id" value="<%- elt._id %>">
                             <input type="submit" value="löschen">
                         </form>
                     </li>
+                    <div class="<%- elt._id %>">
+                        <div class="flexButton">
+                            <button form="editedTask" onclick="getValues()">speichern</button>
+                            <span class="divider">|</span>
+                            <button onClick="editForm('<%- elt._id %>')">schließen</button>
+                        </div>
+                    </div>
                 <% }) %> 
             </ul>
         </section>
