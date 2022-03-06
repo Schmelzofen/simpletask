@@ -14,17 +14,17 @@
     let first = document.getElementById('first')
     let second = document.getElementById('second')
     let third = document.getElementById('third')
-    if(window.location.href == "https://simpletaskml.herokuapp.com/"){
+    if(window.location.href == "https://simpletaskml.herokuapp.com/" || window.location.href == "http://localhost:3000/"){
         first.classList.add("active")
         second.classList.add("inactive")
         third.classList.add("inactive")
     } 
-    if (window.location.href == "https://simpletaskml.herokuapp.com/menueins"){
+    if (window.location.href == "https://simpletaskml.herokuapp.com/menueins" || window.location.href == "http://localhost:3000/menueins"){
         first.classList.add("inactive")
         second.classList.add("active")
         third.classList.add("inactive")
     }
-    if (window.location.href == "https://simpletaskml.herokuapp.com/menuzwei"){
+    if (window.location.href == "https://simpletaskml.herokuapp.com/menuzwei" || window.location.href == "http://localhost:3000/menuzwei"){
         first.classList.add("inactive")
         second.classList.add("inactive")
         third.classList.add("active")
