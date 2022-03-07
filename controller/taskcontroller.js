@@ -33,15 +33,19 @@ async function addTaskContr(req, res) {
     }
     let reminderDays = tasks.day - tasks.notification
     let reminderMonths = tasks.month
-    console.log(Intl.DateTimeFormat().resolvedOptions().timeZone)
     if (reminderDays < 0) {
         daysLeft = reminderDays + 31
         monthsLeft = reminderMonths - 1
-        mailController(`* * * ${daysLeft} ${monthsLeft} *`, user[0].email, tasks.description, tasks.day, tasks.month)
+        if (monthsLeft <= 0) {
+            monthsLeft = monthsLeft + 12
+            console.log(monthsLeft)
+            mailController(`30 0 12 ${daysLeft} ${monthsLeft} *`, user[0].email, tasks.description, tasks.day, tasks.month)
+        } else {
+            mailController(`30 0 12 ${daysLeft} ${monthsLeft} *`, user[0].email, tasks.description, tasks.day, tasks.month)
+        }
     } else {
-        mailController(`* 0 12 1/${reminderDays} ${reminderMonths} *`, user[0].email, tasks.description, tasks.day, tasks.month)
+        mailController(`59 24 12 ${reminderDays} ${reminderMonths} *`, user[0].email, tasks.description, tasks.day, tasks.month)
     }
-    console.log(reminderDays, reminderMonths)
     const findUser = await db.collection("microlab").updateOne({ _id: ObjectId(user[0]._id) }, { $addToSet: { tasks } }, { upsert: true })
     res.redirect("/menuzwei")
 }
