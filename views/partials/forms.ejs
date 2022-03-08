@@ -41,7 +41,7 @@
                 <% tasks.forEach((elt) => {%>
                     <li><%- elt.day %>.<%- elt.month %>.</li>
                     <div class="<%- elt._id %> inputWidth">
-                        <form action="/edittask" id="editedTask" method="post">
+                        <form action="/edittask" id="editedTask<%-elt._id%>" method="post">
                             <input type="text" name="day" value="<%- elt.day %>">
                             .
                             <input type="text" name="month" value="<%- elt.month %>">
@@ -54,7 +54,7 @@
                 <% tasks.forEach((elt) => {%>
                     <li><%- elt.description %></li>
                     <div class="<%- elt._id %>">
-                        <form id="editedTask">
+                        <form id="editedTask<%-elt._id%>">
                             <input type="text" name="description" value="<%- elt.description %>">
                         </form>
                     </div>
@@ -65,7 +65,7 @@
                 <% tasks.forEach((elt) => {%>
                     <li><%- elt.notification %> Tag(e)</li>
                     <div class="<%- elt._id %>">
-                        <form id="editedTask" required>
+                        <form id="editedTask<%-elt._id%>" required>
                             <select name="notification" required>
                                 <option value="">--bitte auswählen--</option>
                                 <option value="1">1 Tag</option>
@@ -90,7 +90,7 @@
                     </li>
                     <div class="<%- elt._id %>">
                         <div class="flexButton">
-                            <button form="editedTask" onclick="getValues()">speichern</button>
+                            <button form="editedTask" onclick="getValues('<%- elt._id %>')">speichern</button>
                             <span class="divider">|</span>
                             <button onClick="editForm('<%- elt._id %>')">schließen</button>
                         </div>
