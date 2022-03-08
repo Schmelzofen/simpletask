@@ -1,0 +1,5 @@
+DB= mongodb connection required
+SALT= salt for creating the hash
+PORT= port ... 
+EMAIL= emailadress for node mailer
+PASSWD= password for said email
