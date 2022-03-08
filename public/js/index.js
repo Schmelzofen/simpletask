@@ -19,6 +19,8 @@ async function getValues() {
             description: form[1][0].value,
             notification: form[2][0].value
         }
+        console.log(form)
+        console.log("TASK:", editedTask)
         url = "https://simpletaskml.herokuapp.com/edittask"
         const response = await fetch(url, {
             method: 'POST',

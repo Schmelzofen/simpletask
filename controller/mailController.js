@@ -18,7 +18,7 @@ async function mailController(whenToRemind, email, description, day, month) {
 
     let job = cron.schedule(`${whenToRemind}`, () => {
         let reminder = transporter.sendMail({
-            from: '"TaskReminder" <taskreminderml@gmail.com',
+            from: '"TaskReminder" <taskreminderml@gmail.com>',
             to: email,
             subject: "Benachrichtigung",
             text: `Folgendes steht demnächst an: ${description}\nWann: ${day}.${month}.`,

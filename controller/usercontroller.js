@@ -21,17 +21,19 @@ async function loginController(req, res) {
     if (doesUserExist.length == 0) {
         alert("Benutzer konnte nicht gefunden werden.")
         res.redirect("/")
+    } else {
+        const newHash = crypto.pbkdf2Sync(user.password, SALT, 1932, 64, 'sha512').toString('hex')
+        if (newHash == doesUserExist[0].password) {
+            const token = jwt.sign({ user: doesUserExist }, SALT)
+            res.cookie("authcookie", token, { maxAge: 900000, httpOnly: true })
+            alert("Erfolgreich angemeldet.")
+            res.redirect("/")
+        } else if (newHash != doesUserExist[0].password) {
+            alert("Fehler beim anmelden.")
+            res.redirect("/")
+        }
     }
-    const newHash = crypto.pbkdf2Sync(user.password, SALT, 1932, 64, 'sha512').toString('hex')
-    if (newHash == doesUserExist[0].password) {
-        const token = jwt.sign({ user: doesUserExist }, SALT)
-        res.cookie("authcookie", token, { maxAge: 900000, httpOnly: true })
-        alert("Erfolgreich angemeldet.")
-        res.redirect("/")
-    } else if (newHash != doesUserExist[0].password) {
-        alert("Fehler beim anmelden.")
-        res.redirect("/")
-    }
+
 }
 
 async function registrationController(req, res) {

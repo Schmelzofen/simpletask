@@ -44,7 +44,7 @@ async function addTaskContr(req, res) {
             mailController(`30 0 12 ${daysLeft} ${monthsLeft} *`, user[0].email, tasks.description, tasks.day, tasks.month)
         }
     } else {
-        mailController(`59 24 12 ${reminderDays} ${reminderMonths} *`, user[0].email, tasks.description, tasks.day, tasks.month)
+        mailController(`30 0 12 ${reminderDays} ${reminderMonths} *`, user[0].email, tasks.description, tasks.day, tasks.month)
     }
     const findUser = await db.collection("microlab").updateOne({ _id: ObjectId(user[0]._id) }, { $addToSet: { tasks } }, { upsert: true })
     res.redirect("/menuzwei")
@@ -80,6 +80,8 @@ async function editTaskContr(req, res) {
         const removedElement = await db.collection("microlab").updateOne({ _id: ObjectId(user[0]._id) }, { $pull: { tasks: doesItExist[0] } })
         const addedElement = await db.collection("microlab").updateOne({ _id: ObjectId(user[0]._id) }, { $addToSet: { tasks: task } })
         res.redirect("/menuzwei")
+    } else {
+        console.log("Hello")
     }
 }
 
