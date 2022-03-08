@@ -21,10 +21,6 @@ const routes = (app) => {
         .get(checkTokenController, (req, res) => {
             getTaskContr(req, res)
         })
-    app.route("/error")
-        .get((req, res) => {
-            res.render("pages/error")
-        })
     app.route('/addTask')
         .post(addTaskContr)
     app.route('/gettasks')
