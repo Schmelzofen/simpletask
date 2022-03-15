@@ -24,30 +24,34 @@ async function addTaskContr(req, res) {
     const db = await connect()
     const decodedToken = jwt.verify(req.cookies.authcookie, process.env.SALT)
     const user = decodedToken.user
-    const tasks = {
-        _id: ObjectId(),
-        day: req.body.day,
-        month: req.body.month,
-        description: req.body.description,
-        notification: req.body.notification,
-    }
-    let reminderDays = tasks.day - tasks.notification
-    let reminderMonths = tasks.month
-    if (reminderDays < 0) {
-        daysLeft = reminderDays + 31
-        monthsLeft = reminderMonths - 1
-        if (monthsLeft <= 0) {
-            monthsLeft = monthsLeft + 12
-            console.log(monthsLeft)
-            mailController(`30 0 12 ${daysLeft} ${monthsLeft} *`, user[0].email, tasks.description, tasks.day, tasks.month)
-        } else {
-            mailController(`30 0 12 ${daysLeft} ${monthsLeft} *`, user[0].email, tasks.description, tasks.day, tasks.month)
-        }
+    if (req.body.day >= 30 && req.body.month == 02 || req.body.day >= 32) {
+        res.send({ Error: "Invalid Date" })
     } else {
-        mailController(`30 0 12 ${reminderDays} ${reminderMonths} *`, user[0].email, tasks.description, tasks.day, tasks.month)
+        const tasks = {
+            _id: ObjectId(),
+            day: req.body.day,
+            month: req.body.month,
+            description: req.body.description,
+            notification: req.body.notification,
+        }
+        let reminderDays = tasks.day - tasks.notification
+        let reminderMonths = tasks.month
+        if (reminderDays < 0) {
+            daysLeft = reminderDays + 31
+            monthsLeft = reminderMonths - 1
+            if (monthsLeft <= 0) {
+                monthsLeft = monthsLeft + 12
+                console.log(monthsLeft)
+                mailController(`30 0 12 ${daysLeft} ${monthsLeft} *`, user[0].email, tasks.description, tasks.day, tasks.month)
+            } else {
+                mailController(`30 0 12 ${daysLeft} ${monthsLeft} *`, user[0].email, tasks.description, tasks.day, tasks.month)
+            }
+        } else {
+            mailController(`30 0 12 ${reminderDays} ${reminderMonths} *`, user[0].email, tasks.description, tasks.day, tasks.month)
+        }
+        const findUser = await db.collection("microlab").updateOne({ _id: ObjectId(user[0]._id) }, { $addToSet: { tasks } }, { upsert: true })
+        res.redirect("/menuzwei")
     }
-    const findUser = await db.collection("microlab").updateOne({ _id: ObjectId(user[0]._id) }, { $addToSet: { tasks } }, { upsert: true })
-    res.redirect("/menuzwei")
 }
 
 async function deleteTaskContr(req, res) {
